@@ -1,6 +1,8 @@
 package cn.chenjy.pmg.mysql.common;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 /**
  * @author 陈俊羽 chenjyfy@vip.qq.com
@@ -24,6 +26,29 @@ public class FileUtils {
             if (!file.exists()) {
                 file.mkdir();
             }
+        }
+    }
+
+
+
+    public static void writeJavaFile(String content, String filename, String fileAddress){
+        String javaFileName = fileAddress + filename +".java";
+        File javaFile = new File(javaFileName);
+        try {
+            FileUtils.createDirectory(fileAddress);
+            if(!javaFile.exists()){
+                javaFile.createNewFile();
+
+            } else {
+                FileUtils.deleteFile(javaFileName);
+                javaFile.createNewFile();
+            }
+            FileWriter resultFile = new FileWriter(javaFile);
+            PrintWriter myNewFile = new PrintWriter(resultFile);
+            myNewFile.println(content);
+            resultFile.close();
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

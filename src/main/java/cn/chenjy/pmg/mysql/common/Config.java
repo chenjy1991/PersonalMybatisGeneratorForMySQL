@@ -20,4 +20,7 @@ public class Config {
     public static final String DAO_ADDRESS = "/Users/chenjy/Documents/patrol/src/main/java/com/nbmssoft/patrol/dao/";
     public static final String DAO_PACKAGE = "com.nbmssoft.patrol.dao";
     public static final String XML_ADDRESS = "/Users/chenjy/Documents/patrol/src/main/resources/mapper/";
+
+    //String properties
+    public static final String ENTER_KEY = "\r";
 }

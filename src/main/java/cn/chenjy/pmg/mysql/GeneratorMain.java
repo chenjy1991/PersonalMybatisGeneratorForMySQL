@@ -1,6 +1,7 @@
 package cn.chenjy.pmg.mysql;
 
 import cn.chenjy.pmg.mysql.common.Config;
+import cn.chenjy.pmg.mysql.generator.DaoGenerator;
 import cn.chenjy.pmg.mysql.generator.EntityGenerator;
 
 import java.sql.Connection;
@@ -49,6 +50,7 @@ public class GeneratorMain {
                 mapList = new LinkedList<>();
             }
             EntityGenerator.generatorEntity(mapTable);
+            DaoGenerator.getJavaStr(mapTable);
         } catch (Exception e) {
             e.printStackTrace();
         }
