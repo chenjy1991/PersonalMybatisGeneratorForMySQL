@@ -14,12 +14,19 @@ public class Config {
     public static final String JDBC_PASSWORD = "Nbms_chenjy";
     public static final String[] TABLE_NAMES = {"company_maintain", "data_ctrl_event", "device_base_info", "device_property"};
 
-    //file properties
-    public static final String ENTITY_ADDRESS = "/Users/chenjy/Documents/patrol/src/main/java/com/nbmssoft/patrol/pojo/entity/";
+    //file properties mac
+//    public static final String ENTITY_ADDRESS = "/Users/chenjy/Documents/patrol/src/main/java/com/nbmssoft/patrol/pojo/entity/";
+//    public static final String ENTITY_PACKAGE = "com.nbmssoft.patrol.pojo.entity";
+//    public static final String DAO_ADDRESS = "/Users/chenjy/Documents/patrol/src/main/java/com/nbmssoft/patrol/dao/";
+//    public static final String DAO_PACKAGE = "com.nbmssoft.patrol.dao";
+//    public static final String XML_ADDRESS = "/Users/chenjy/Documents/patrol/src/main/resources/mapper/";
+
+    //file properties mac
+    public static final String ENTITY_ADDRESS = "C:/Users/peach/code/patrol/pojo/entity/";
     public static final String ENTITY_PACKAGE = "com.nbmssoft.patrol.pojo.entity";
-    public static final String DAO_ADDRESS = "/Users/chenjy/Documents/patrol/src/main/java/com/nbmssoft/patrol/dao/";
+    public static final String DAO_ADDRESS = "C:/Users/peach/code/patrol/dao/";
     public static final String DAO_PACKAGE = "com.nbmssoft.patrol.dao";
-    public static final String XML_ADDRESS = "/Users/chenjy/Documents/patrol/src/main/resources/mapper/";
+    public static final String XML_ADDRESS = "C:/Users/peach/code/patrol/mapper/";
 
     //String properties
     public static final String ENTER_KEY = "\r";

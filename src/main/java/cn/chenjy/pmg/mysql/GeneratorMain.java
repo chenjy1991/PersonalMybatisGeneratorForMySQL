@@ -3,6 +3,7 @@ package cn.chenjy.pmg.mysql;
 import cn.chenjy.pmg.mysql.common.Config;
 import cn.chenjy.pmg.mysql.generator.DaoGenerator;
 import cn.chenjy.pmg.mysql.generator.EntityGenerator;
+import cn.chenjy.pmg.mysql.generator.MapperGenerator;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -20,8 +21,7 @@ import java.util.Map;
  */
 public class GeneratorMain {
 
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         List<List<Map<String, String>>> listList = new LinkedList<>();
         List<Map<String, String>> mapList = new LinkedList<>();
         Map<String, Object> mapTable = new LinkedHashMap<>();
@@ -51,6 +51,7 @@ public class GeneratorMain {
             }
             EntityGenerator.generatorEntity(mapTable);
             DaoGenerator.getJavaStr(mapTable);
+            MapperGenerator.getJavaStr(mapTable);
         } catch (Exception e) {
             e.printStackTrace();
         }

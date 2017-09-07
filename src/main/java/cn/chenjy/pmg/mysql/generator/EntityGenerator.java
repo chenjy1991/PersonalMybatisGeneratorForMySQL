@@ -17,7 +17,7 @@ import java.util.Map;
 public class EntityGenerator {
     public static final char UNDERLINE = '_';
 
-    public static void generatorEntity(Map<String,Object> tableMap) {
+    public static void generatorEntity(Map<String, Object> tableMap) {
         getJavaStr(tableMap);
     }
 
@@ -27,6 +27,8 @@ public class EntityGenerator {
             StringBuilder sb = new StringBuilder();
             List<String> typeList = new ArrayList<>();
             String tableName = table.getKey().toString();
+            String tableNameUp = StringUtils.getNameUp(tableName);
+            String tableNameLo = StringUtils.getNameLo(tableName);
             List<Map<String, String>> tableObj = table.getValue() instanceof LinkedList ? (List<Map<String, String>>) table.getValue() : null;
             sb.append("package " + Config.ENTITY_PACKAGE + ";" + enterKey + enterKey);
             //添加字段类型
@@ -42,7 +44,7 @@ public class EntityGenerator {
                     sb.append("import java.sql.Timestamp;" + enterKey);
                 }
             }
-            sb.append("public class " + StringUtils.getNameUp(tableName) + " {" + enterKey);
+            sb.append("public class " + tableNameUp + " {" + enterKey);
             for (Map<String, String> coloum : tableObj) {
                 String typeStr = StringUtils.getJavaType(coloum.get("type"));
 
@@ -60,9 +62,7 @@ public class EntityGenerator {
                 sb.append("    }" + enterKey);
             }
             sb.append("}");
-            FileUtils.writeJavaFile(sb.toString(), StringUtils.getNameUp(tableName),Config.ENTITY_ADDRESS);
+            FileUtils.writeJavaFile(sb.toString(), tableNameUp + ".java", Config.ENTITY_ADDRESS);
         }
     }
-
-
 }

@@ -44,6 +44,13 @@ public class StringUtils {
         return tableStr;
     }
 
+    public static String getSQLType(String sqlType){
+        if(sqlType.equals("INT")){
+            return "INTEGER";
+        } else {
+            return sqlType;
+        }
+    }
     /**
      * 数据库类型转java类型
      * @param sqlType
@@ -53,6 +60,9 @@ public class StringUtils {
         String javatype = "";
         switch (sqlType) {
             case "INT":
+                javatype = "Integer";
+                break;
+            case "INTEGER":
                 javatype = "Integer";
                 break;
             case "VARCHAR":

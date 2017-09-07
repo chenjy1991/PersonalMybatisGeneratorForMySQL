@@ -29,14 +29,12 @@ public class FileUtils {
         }
     }
 
-
-
-    public static void writeJavaFile(String content, String filename, String fileAddress){
-        String javaFileName = fileAddress + filename +".java";
+    public static void writeJavaFile(String content, String filename, String fileAddress) {
+        String javaFileName = fileAddress + filename;
         File javaFile = new File(javaFileName);
         try {
             FileUtils.createDirectory(fileAddress);
-            if(!javaFile.exists()){
+            if (!javaFile.exists()) {
                 javaFile.createNewFile();
 
             } else {
@@ -47,7 +45,7 @@ public class FileUtils {
             PrintWriter myNewFile = new PrintWriter(resultFile);
             myNewFile.println(content);
             resultFile.close();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
