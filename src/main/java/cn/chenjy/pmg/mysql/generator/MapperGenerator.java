@@ -24,7 +24,7 @@ public class MapperGenerator {
             String idJavaType = StringUtils.getJavaType(idSqlType);
             String idName = tableObj.get(0).get("name");
             String idNameLo = StringUtils.getNameLo(idName);
-
+            //start content
             sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + enterKey);
             sb.append("<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">" + enterKey);
             sb.append("<mapper namespace=\"" + Config.DAO_PACKAGE + "." + tableNameUp + "Dao\">" + enterKey);
@@ -32,8 +32,8 @@ public class MapperGenerator {
             for (Map<String, String> column : tableObj) {
                 String sqlType = StringUtils.getSQLType(column.get("type"));
                 String name = column.get("name");
-                if (name.toLowerCase().equals("id")) {
-                    sb.append("        <id column=\"id\" jdbcType=\"" + idSqlType + "\" property=\"id\" />" + enterKey);
+                if (name.toLowerCase().equals(idName)) {
+                    sb.append("        <id column=\"id\" jdbcType=\"" + idSqlType + "\" property=\""+idNameLo+"\" />" + enterKey);
                 } else {
                     sb.append("        <result column=\"" + name + "\" jdbcType=\"" + sqlType + "\" property=\"" + name + "\" />" + enterKey);
                 }
@@ -102,20 +102,133 @@ public class MapperGenerator {
             }
             sb.append("        </where>"+enterKey);
             sb.append("    </select>"+enterKey+enterKey);
+            // List<Object> listSelective(Object object);
+            sb.append("    <select id=\"listSelective\" parameterType=\""+Config.ENTITY_PACKAGE+"."+tableNameUp+"\" resultMap=\"BaseResultMap\">"+enterKey);
+            sb.append("        SELECT"+enterKey);
+            sb.append("            ");
+            for (Map<String, String> column : tableObj){
+                sb.append(column.get("name")+",");
+            }
+            sb.deleteCharAt(sb.length()-1);
+            sb.append(enterKey);
+            sb.append("        FROM "+tableName+enterKey);
+            sb.append("        <where>"+enterKey);
+            for (Map<String, String> column : tableObj){
+                String sqlType = StringUtils.getSQLType(column.get("type"));
+                String name = column.get("name");
+                String nameLo = StringUtils.getNameLo(name);
+                if(sqlType.equals("VARCHAR")){
+                    sb.append("            <if test=\" "+nameLo+" != null and "+nameLo+" != '' \">"+enterKey);
+                    sb.append("                AND "+name+"=#{"+nameLo+",jdbcType="+sqlType+"}"+enterKey);
+                    sb.append("            </if>"+enterKey);
+                } else {
+                    sb.append("            <if test=\" "+nameLo+" != null \">"+enterKey);
+                    sb.append("                AND "+name+"=#{"+nameLo+",jdbcType=\""+sqlType+"\"}"+enterKey);
+                    sb.append("            </if>"+enterKey);
+                }
+            }
+            sb.append("        </where>"+enterKey);
+            sb.append("    </select>"+enterKey+enterKey);
+            // int save(Object object);
+            sb.append("    <insert id=\"save\" parameterType=\""+Config.ENTITY_PACKAGE+"."+tableNameUp+"\" keyProperty=\""+idNameLo+"\" useGeneratedKeys=\"true\">"+enterKey);
+            sb.append("        INSERT INTO "+tableName+"(");
+            for (Map<String, String> column : tableObj){
+                sb.append(enterKey+"            "+column.get("name")+",");
+            }
+            sb.deleteCharAt(sb.length()-1);
+            sb.append(enterKey);
+            sb.append("        ) VALUES (");
+            for (Map<String, String> column : tableObj){
+                sb.append(enterKey+"            #{"+StringUtils.getNameLo(column.get("name"))+",jdbcType="+StringUtils.getSQLType(column.get("type"))+"},");
+            }
+            sb.deleteCharAt(sb.length()-1);
+            sb.append(enterKey);
+            sb.append("        )"+enterKey);
+            sb.append("    </insert>"+enterKey+enterKey);
+            // int saveSelective(Object object);
+            sb.append("    <insert id=\"saveSelective\" parameterType=\""+Config.ENTITY_PACKAGE+"."+tableNameUp+"\" keyProperty=\""+idNameLo+"\" useGeneratedKeys=\"true\">"+enterKey);
+            sb.append("        INSERT INTO "+tableName+enterKey);
+            sb.append("            <trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\" >"+enterKey);
+            for (Map<String, String> column : tableObj){
+                String sqlType = StringUtils.getSQLType(column.get("type"));
+                String name = column.get("name");
+                String nameLo = StringUtils.getNameLo(name);
+                if(sqlType.equals("VARCHAR")){
+                    sb.append("                <if test=\" "+nameLo+" != null and "+nameLo+" != '' \">"+enterKey);
+                    sb.append("                    "+name+","+enterKey);
+                    sb.append("                </if>"+enterKey);
+                } else {
+                    sb.append("                <if test=\" "+nameLo+" != null \">"+enterKey);
+                    sb.append("                    "+name+","+enterKey);
+                    sb.append("                </if>"+enterKey);
+                }
+            }
+            sb.append("            </trim>"+enterKey);
+            sb.append("            <trim prefix=\" VALUES (\" suffix=\")\" suffixOverrides=\",\" >"+enterKey);
+            for (Map<String, String> column : tableObj){
+                String sqlType = StringUtils.getSQLType(column.get("type"));
+                String name = column.get("name");
+                String nameLo = StringUtils.getNameLo(name);
+                if(sqlType.equals("VARCHAR")){
+                    sb.append("                <if test=\" "+nameLo+" != null and "+nameLo+" != '' \">"+enterKey);
+                    sb.append("                    #{"+nameLo+",jdbcType="+sqlType+"},"+enterKey);
+                    sb.append("                </if>"+enterKey);
+                } else {
+                    sb.append("                <if test=\" "+nameLo+" != null \">"+enterKey);
+                    sb.append("                    #{"+nameLo+",jdbcType="+sqlType+"},"+enterKey);
+                    sb.append("                </if>"+enterKey);
+                }
+            }
+            sb.append("            </trim>"+enterKey);
+            sb.append("    </insert>"+enterKey+enterKey);
+            // int update(Object object);
+            sb.append("    <update id=\"update\" parameterType=\""+Config.ENTITY_PACKAGE+"."+tableNameUp+"\">"+enterKey);
+            sb.append("        UPDATE "+tableName+" SET");
+            for (Map<String, String> column : tableObj){
+                String sqlType = StringUtils.getSQLType(column.get("type"));
+                String name = column.get("name");
+                String nameLo = StringUtils.getNameLo(name);
+                if(!name.equals(idName)){
+                    sb.append(enterKey+"            "+name+" = #{"+nameLo+",jdbcType="+sqlType+"},");
+                }
+            }
+            sb.deleteCharAt(sb.length()-1);
+            sb.append(enterKey+"        WHERE "+idName+" = #{"+idNameLo+",jdbcType="+idSqlType+"}"+enterKey);
+            sb.append("    </update>"+enterKey+enterKey);
+            // int updateSelective(Object object);
+            sb.append("    <update id=\"updateSelective\" parameterType=\""+Config.ENTITY_PACKAGE+"."+tableNameUp+"\">"+enterKey);
+            sb.append("        UPDATE "+tableName+enterKey);
+            sb.append("            <set>"+enterKey);
+            for (Map<String, String> column : tableObj){
+                String sqlType = StringUtils.getSQLType(column.get("type"));
+                String name = column.get("name");
+                String nameLo = StringUtils.getNameLo(name);
+                if(!name.equals(idName)){
+                    if(sqlType.equals("VARCHAR")){
+                        sb.append("                <if test=\" "+nameLo+" != null and "+nameLo+" != '' \">"+enterKey);
+                        sb.append("                    "+name+" = #{"+nameLo+",jdbcType="+sqlType+"},"+enterKey);
+                        sb.append("                </if>"+enterKey);
+                    } else {
+                        sb.append("                <if test=\" "+nameLo+" != null \">"+enterKey);
+                        sb.append("                    "+name+" = #{"+nameLo+",jdbcType="+sqlType+"},"+enterKey);
+                        sb.append("                </if>"+enterKey);
+                    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+                }
+            }
+            sb.append("            </set>"+enterKey);
+            sb.append("        WHERE "+idName+" = #{"+idNameLo+",jdbcType="+idSqlType+"}"+enterKey);
+            sb.append("    </update>"+enterKey+enterKey);
+            // int removeSign(Integer id);
+            sb.append("    <update id=\"removeSign\" parameterType=\"java.lang."+idJavaType+"\">"+enterKey);
+            sb.append("        UPDATE "+tableName+" SET time_delete = (SELECT unix_timestamp() * 1000) WHERE "+idName+" = #{"+idNameLo+",jdbcType="+idSqlType+"}"+enterKey);
+            sb.append("    </update>"+enterKey+enterKey);
+            // int removeReal(Integer id);
+            sb.append("    <delete id=\"removeReal\" parameterType=\"java.lang."+idJavaType+"\">"+enterKey);
+            sb.append("        DELETE FROM "+tableName+" WHERE "+idName+" = #{"+idNameLo+",jdbcType="+idSqlType+"}"+enterKey);
+            sb.append("    </delete>"+enterKey);
             sb.append("</mapper>");
+            //end content
             FileUtils.writeJavaFile(sb.toString(), tableNameUp + "Mapper.xml", Config.XML_ADDRESS);
         }
     }
