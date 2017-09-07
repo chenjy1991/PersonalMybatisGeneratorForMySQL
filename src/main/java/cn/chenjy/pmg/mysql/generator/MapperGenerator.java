@@ -32,10 +32,11 @@ public class MapperGenerator {
             for (Map<String, String> column : tableObj) {
                 String sqlType = StringUtils.getSQLType(column.get("type"));
                 String name = column.get("name");
+                String nameLo = StringUtils.getNameLo(name);
                 if (name.toLowerCase().equals(idName)) {
                     sb.append("        <id column=\"id\" jdbcType=\"" + idSqlType + "\" property=\""+idNameLo+"\" />" + enterKey);
                 } else {
-                    sb.append("        <result column=\"" + name + "\" jdbcType=\"" + sqlType + "\" property=\"" + name + "\" />" + enterKey);
+                    sb.append("        <result column=\"" + name + "\" jdbcType=\"" + sqlType + "\" property=\"" + nameLo + "\" />" + enterKey);
                 }
             }
             sb.append("    </resultMap>" + enterKey + enterKey);
