@@ -34,6 +34,8 @@ public class DaoGenerator {
             sb.append("@Component"+enterKey);
             sb.append("@Mapper"+enterKey);
             sb.append("public interface "+tableNameUp+"Dao {"+enterKey);
+            sb.append("    Long count();"+enterKey+enterKey);
+            sb.append("    Long countSelective("+tableNameUp+" "+tableNameLo+");"+enterKey+enterKey);
             sb.append("    "+tableNameUp+" get("+idType+" id);"+enterKey+enterKey);
             sb.append("    "+tableNameUp+" getSelective("+tableNameUp+" "+tableNameLo+");"+enterKey+enterKey);
             sb.append("    List<"+tableNameUp+"> listSelective("+tableNameUp+ " "+tableNameLo+");"+enterKey+enterKey);
@@ -41,8 +43,8 @@ public class DaoGenerator {
             sb.append("    int saveSelective("+tableNameUp+" "+tableNameLo+");"+enterKey+enterKey);
             sb.append("    int update("+tableNameUp+" "+tableNameLo+");"+enterKey+enterKey);
             sb.append("    int updateSelective("+tableNameUp+ " "+tableNameLo+");"+enterKey+enterKey);
-            sb.append("    int deleteSign("+idType+" id);"+enterKey+enterKey);
-            sb.append("    int deleteReal("+idType+" id);"+enterKey);
+            sb.append("    int removeSign("+idType+" id);"+enterKey+enterKey);
+            sb.append("    int removeReal("+idType+" id);"+enterKey);
             sb.append("}");
             FileUtils.writeJavaFile(sb.toString(), tableNameUp+"Dao", Config.DAO_ADDRESS);
 
