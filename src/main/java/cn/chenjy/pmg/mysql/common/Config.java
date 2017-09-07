@@ -9,10 +9,10 @@ public class Config {
     //database properties
     public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     public static final String JDBC_URL = "rds3135d68dk69915sz5.mysql.rds.aliyuncs.com";
-    public static final String JDBC_DATABASE = "weather_patrol";
-    public static final String JDBC_USERNAME = "nbms_chenjy";
-    public static final String JDBC_PASSWORD = "Nbms_chenjy";
-    public static final String[] TABLE_NAMES = {"company_maintain", "data_ctrl_event", "device_base_info", "device_property"};
+    public static final String JDBC_DATABASE = "test_db";
+    public static final String JDBC_USERNAME = "test_account";
+    public static final String JDBC_PASSWORD = "Test_password";
+    public static final String[] TABLE_NAMES = {"gdtest"};
 
     //file properties mac
 //    public static final String ENTITY_ADDRESS = "/Users/chenjy/Documents/patrol/src/main/java/com/nbmssoft/patrol/pojo/entity/";

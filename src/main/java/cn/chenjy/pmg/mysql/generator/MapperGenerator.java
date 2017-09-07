@@ -74,7 +74,7 @@ public class MapperGenerator {
             sb.deleteCharAt(sb.length()-1);
             sb.append(enterKey);
             sb.append("        FROM "+tableName+enterKey);
-            sb.append("        WHERE "+idName+"#{"+idNameLo+",jdbcType="+idSqlType+"}"+enterKey);
+            sb.append("        WHERE "+idName+" = #{"+idNameLo+",jdbcType="+idSqlType+"}"+enterKey);
             sb.append("    </select>"+enterKey+enterKey);
             // Object getSelective(Object object);
             sb.append("    <select id=\"getSelective\" resultMap=\"BaseResultMap\">"+enterKey);
