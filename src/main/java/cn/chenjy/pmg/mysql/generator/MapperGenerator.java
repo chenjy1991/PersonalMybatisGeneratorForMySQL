@@ -31,6 +31,9 @@ public class MapperGenerator {
             sb.append("    <resultMap id=\"BaseResultMap\" type=\"" + Config.ENTITY_PACKAGE + "." + tableNameUp + "\">" + enterKey);
             for (Map<String, String> column : tableObj) {
                 String sqlType = StringUtils.getSQLType(column.get("type"));
+                if(sqlType.equals("TEXT")){
+                    sqlType = "VARCHAR";
+                }
                 String name = column.get("name");
                 String nameLo = StringUtils.getNameLo(name);
                 if (name.toLowerCase().equals(idName)) {
@@ -50,6 +53,9 @@ public class MapperGenerator {
             sb.append("        <where>"+enterKey);
             for (Map<String, String> column : tableObj){
                 String sqlType = StringUtils.getSQLType(column.get("type"));
+                if(sqlType.equals("TEXT")){
+                    sqlType = "VARCHAR";
+                }
                 String name = column.get("name");
                 String nameLo = StringUtils.getNameLo(name);
                 if(sqlType.equals("VARCHAR")){
@@ -58,7 +64,7 @@ public class MapperGenerator {
                     sb.append("            </if>"+enterKey);
                 } else {
                     sb.append("            <if test=\" "+nameLo+" != null \">"+enterKey);
-                    sb.append("                AND "+name+"=#{"+nameLo+",jdbcType=\""+sqlType+"\"}"+enterKey);
+                    sb.append("                AND "+name+"=#{"+nameLo+",jdbcType="+sqlType+"}"+enterKey);
                     sb.append("            </if>"+enterKey);
                 }
             }
@@ -89,6 +95,9 @@ public class MapperGenerator {
             sb.append("        <where>"+enterKey);
             for (Map<String, String> column : tableObj){
                 String sqlType = StringUtils.getSQLType(column.get("type"));
+                if(sqlType.equals("TEXT")){
+                    sqlType = "VARCHAR";
+                }
                 String name = column.get("name");
                 String nameLo = StringUtils.getNameLo(name);
                 if(sqlType.equals("VARCHAR")){
@@ -97,7 +106,7 @@ public class MapperGenerator {
                     sb.append("            </if>"+enterKey);
                 } else {
                     sb.append("            <if test=\" "+nameLo+" != null \">"+enterKey);
-                    sb.append("                AND "+name+"=#{"+nameLo+",jdbcType=\""+sqlType+"\"}"+enterKey);
+                    sb.append("                AND "+name+"=#{"+nameLo+",jdbcType="+sqlType+"}"+enterKey);
                     sb.append("            </if>"+enterKey);
                 }
             }
@@ -116,6 +125,9 @@ public class MapperGenerator {
             sb.append("        <where>"+enterKey);
             for (Map<String, String> column : tableObj){
                 String sqlType = StringUtils.getSQLType(column.get("type"));
+                if(sqlType.equals("TEXT")){
+                    sqlType = "VARCHAR";
+                }
                 String name = column.get("name");
                 String nameLo = StringUtils.getNameLo(name);
                 if(sqlType.equals("VARCHAR")){
@@ -124,7 +136,7 @@ public class MapperGenerator {
                     sb.append("            </if>"+enterKey);
                 } else {
                     sb.append("            <if test=\" "+nameLo+" != null \">"+enterKey);
-                    sb.append("                AND "+name+"=#{"+nameLo+",jdbcType=\""+sqlType+"\"}"+enterKey);
+                    sb.append("                AND "+name+"=#{"+nameLo+",jdbcType="+sqlType+"}"+enterKey);
                     sb.append("            </if>"+enterKey);
                 }
             }
@@ -140,7 +152,11 @@ public class MapperGenerator {
             sb.append(enterKey);
             sb.append("        ) VALUES (");
             for (Map<String, String> column : tableObj){
-                sb.append(enterKey+"            #{"+StringUtils.getNameLo(column.get("name"))+",jdbcType="+StringUtils.getSQLType(column.get("type"))+"},");
+                String sqlType = StringUtils.getSQLType(column.get("type"));
+                if(sqlType.equals("TEXT")){
+                    sqlType = "VARCHAR";
+                }
+                sb.append(enterKey+"            #{"+StringUtils.getNameLo(column.get("name"))+",jdbcType="+sqlType+"},");
             }
             sb.deleteCharAt(sb.length()-1);
             sb.append(enterKey);
@@ -152,6 +168,9 @@ public class MapperGenerator {
             sb.append("            <trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\" >"+enterKey);
             for (Map<String, String> column : tableObj){
                 String sqlType = StringUtils.getSQLType(column.get("type"));
+                if(sqlType.equals("TEXT")){
+                    sqlType = "VARCHAR";
+                }
                 String name = column.get("name");
                 String nameLo = StringUtils.getNameLo(name);
                 if(sqlType.equals("VARCHAR")){
@@ -168,6 +187,9 @@ public class MapperGenerator {
             sb.append("            <trim prefix=\" VALUES (\" suffix=\")\" suffixOverrides=\",\" >"+enterKey);
             for (Map<String, String> column : tableObj){
                 String sqlType = StringUtils.getSQLType(column.get("type"));
+                if(sqlType.equals("TEXT")){
+                    sqlType = "VARCHAR";
+                }
                 String name = column.get("name");
                 String nameLo = StringUtils.getNameLo(name);
                 if(sqlType.equals("VARCHAR")){
@@ -187,6 +209,9 @@ public class MapperGenerator {
             sb.append("        UPDATE "+tableName+" SET");
             for (Map<String, String> column : tableObj){
                 String sqlType = StringUtils.getSQLType(column.get("type"));
+                if(sqlType.equals("TEXT")){
+                    sqlType = "VARCHAR";
+                }
                 String name = column.get("name");
                 String nameLo = StringUtils.getNameLo(name);
                 if(!name.equals(idName)){
@@ -202,6 +227,9 @@ public class MapperGenerator {
             sb.append("            <set>"+enterKey);
             for (Map<String, String> column : tableObj){
                 String sqlType = StringUtils.getSQLType(column.get("type"));
+                if(sqlType.equals("TEXT")){
+                    sqlType = "VARCHAR";
+                }
                 String name = column.get("name");
                 String nameLo = StringUtils.getNameLo(name);
                 if(!name.equals(idName)){
