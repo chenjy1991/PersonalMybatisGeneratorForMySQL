@@ -1,9 +1,7 @@
 package cn.chenjy.pmg.mysql;
 
 import cn.chenjy.pmg.mysql.common.Config;
-import cn.chenjy.pmg.mysql.generator.DaoGenerator;
-import cn.chenjy.pmg.mysql.generator.EntityGenerator;
-import cn.chenjy.pmg.mysql.generator.MapperGenerator;
+import cn.chenjy.pmg.mysql.generator.*;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -29,6 +27,7 @@ public class GeneratorMain {
         try {
             Class.forName(Config.JDBC_DRIVER).newInstance();
             Connection con = DriverManager.getConnection("jdbc:mysql://" + Config.JDBC_URL + "/" + Config.JDBC_DATABASE + "?user=" + Config.JDBC_USERNAME + "&password=" + Config.JDBC_PASSWORD + "");
+//            Connection con = DriverManager.getConnection("jdbc:sqlserver://192.168.199.71:1433;databaseName=XUNJIAN","sa","yx@2015");
             DatabaseMetaData mDBMetaData = con.getMetaData();
             for (String tableName : Config.TABLE_NAMES) {
                 System.out.println("Table:------->" + tableName);
@@ -52,6 +51,9 @@ public class GeneratorMain {
             EntityGenerator.generatorEntity(mapTable);
             DaoGenerator.getJavaStr(mapTable);
             MapperGenerator.getJavaStr(mapTable);
+            ServiceGenerator.getJavaStr(mapTable);
+            ServiceImplGenerator.getJavaStr(mapTable);
+            ControllerGenerator.getJavaStr(mapTable);
         } catch (Exception e) {
             e.printStackTrace();
         }

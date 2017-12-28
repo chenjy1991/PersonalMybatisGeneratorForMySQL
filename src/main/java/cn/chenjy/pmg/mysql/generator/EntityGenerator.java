@@ -1,13 +1,11 @@
 package cn.chenjy.pmg.mysql.generator;
 
 import cn.chenjy.pmg.mysql.common.Config;
+import cn.chenjy.pmg.mysql.common.DateUtils;
 import cn.chenjy.pmg.mysql.common.FileUtils;
 import cn.chenjy.pmg.mysql.common.StringUtils;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author 陈俊羽 chenjyfy@vip.qq.com
@@ -44,6 +42,10 @@ public class EntityGenerator {
                     sb.append("import java.sql.Timestamp;" + enterKey);
                 }
             }
+            sb.append("/**" + enterKey);
+            sb.append(" * @author " + Config.AUTHOR + " " + Config.AUTHOR_EMAIL + " " + DateUtils.date2StrDefault(new Date()) + enterKey);
+            sb.append(" * @Description:" + enterKey);
+            sb.append(" */" + enterKey);
             sb.append("public class " + tableNameUp + " {" + enterKey);
             for (Map<String, String> coloum : tableObj) {
                 String typeStr = StringUtils.getJavaType(coloum.get("type"));

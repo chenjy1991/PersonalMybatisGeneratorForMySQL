@@ -11,10 +11,11 @@ public class StringUtils {
 
     /**
      * "_"命名改为首字母小写的驼峰命名
+     *
      * @param tableName
      * @return
      */
-    public static String getNameLo(String tableName){
+    public static String getNameLo(String tableName) {
         if (tableName == null || "".equals(tableName.trim())) {
             return "";
         }
@@ -35,6 +36,7 @@ public class StringUtils {
 
     /**
      * "_"命名改为首字母大写的驼峰命名
+     *
      * @param tableName
      * @return
      */
@@ -44,15 +46,17 @@ public class StringUtils {
         return tableStr;
     }
 
-    public static String getSQLType(String sqlType){
-        if(sqlType.equals("INT")){
+    public static String getSQLType(String sqlType) {
+        if (sqlType.equals("INT")) {
             return "INTEGER";
         } else {
             return sqlType;
         }
     }
+
     /**
      * 数据库类型转java类型
+     *
      * @param sqlType
      * @return
      */
@@ -80,16 +84,17 @@ public class StringUtils {
 
     /**
      * 根据操作系统获取换行符
+     *
      * @return
      */
-    public static String getEnterKey(){
+    public static String getEnterKey() {
         String enterKey = "";
         String osname = System.getProperties().getProperty("os.name").toLowerCase();
-        if(osname.contains("mac")){
+        if (osname.contains("mac")) {
             enterKey = "\r";
-        } else if (osname.contains("linux")){
+        } else if (osname.contains("linux")) {
             enterKey = "\n";
-        } else if(osname.contains("windows")){
+        } else if (osname.contains("windows")) {
             enterKey = "\r\n";
         }
         return enterKey;
